@@ -8,15 +8,17 @@
 <h1>목록 추가하기</h1>
 <hr>
 
-<form action="/board" method="POST">
+<form action="/board/create_process" method="POST">
     <table>
         <tr>
-            <td><input type="text" name="inputTitle" placeholder="제목을 입력하세요."></td>
+            <td><input type="text" name="inputWriter" placeholder="작성자를 입력하세요." id="post_writer" required></td>
         </tr>
         <tr>
-            <td><input type="text" name="inputWriter" placeholder="작성자를 입력하세요."></td>
+            <td><input type="text" name="inputTitle" placeholder="제목을 입력하세요."id="post_title" required></td>
         </tr>
-        
+        <tr>
+            <td><textarea name="inputContent" id="content" cols="30" rows="10" id="post_content" required></textarea></td>
+        </tr>
     </table>
     <input type="submit" value="저장">
 </form>

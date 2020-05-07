@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+    td{border:1px solid gray;}
+        </style>
+<h1>게시글 수정하기</h1>
+<hr>
+    <table>
+        <tr>
+            <td>제목</td>
+            <td><%=post.title%></td>
+        </tr>
+        <tr>
+            <td>작성자</td>
+            <td><%=post.writer%></td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td><%=post.content%></td>
+        </tr>
+        <tr>
+            <td colspan=2>
+                <button ><a href="/board/update/<%=post.id%>">수정하기</a></button>
+                <form action="/board/<%=post.id%>?_method=DELETE" method="post">
+                    <input type="submit" value="삭제하기"></input>
+                </form>
+                <button ><a href="/board">목록으로</a></button>
+            </td>
+            
+        </tr>
+        
+    </table>
+</body>
+</html>

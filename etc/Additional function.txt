@@ -1,0 +1,26 @@
+
+제목이나 작성자로 검색해서 게시물 찾을때 사용 가능함 [ board.js 에서 ]
+
+router.get('/board', function(req, res, next) {
+    models.post.findAll({
+      where: {writer: "d2vts"}
+    })
+    .then( result => {
+      res.render("show", {
+        posts: result
+      });
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+  });
+
+where 대신 attributes, order 등의 조건을 추가 가능
+
+attributes: ["title"]
+title 컬럼만 조회
+order: [["id", "DESC"]]
+id를 내림차순으로 정렬
+
+
+

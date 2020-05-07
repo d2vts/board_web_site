@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<h1>목록 추가하기</h1>
+<hr>
+
+<form action="/board/update_process/<%=post.id %>?_method=PUT" method="post">
+    <table>
+        <tr>
+            <td><input type="text" name="editTitle" value="<%= post.title %>" id="post_title" required></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="editWriter" value="<%= post.writer %>" id="post_writer" required></td>
+        </tr>
+        <tr>
+            <td><textarea name="editContent" id="content" cols="30" rows="10" id="post_content" required><%= post.content%></textarea></td>
+        </tr>
+        
+    </table>
+    <input type="submit" value="저장">
+</form>
+</body>
+</html>

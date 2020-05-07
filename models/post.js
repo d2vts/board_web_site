@@ -8,10 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     writer:{
       type: DataTypes.STRING,
       allowNull: false
-    },
-    c_date:{
-      type: DataTypes.DATE,
-      allowNull: false
+    },content:{
+      type: DataTypes.TEXT
     },
     views:{
       type: DataTypes.INTEGER,

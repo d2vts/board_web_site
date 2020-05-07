@@ -11,13 +11,11 @@ module.exports = {
       title: {
         type: Sequelize.STRING,
         allowNull:false
+      },content:{
+        type: Sequelize.TEXT
       },
       writer: {
         type: Sequelize.STRING,
-        allowNull:false
-      },
-      c_date: {
-        type: Sequelize.DATE,
         allowNull:false
       },
       views: {
@@ -25,6 +23,7 @@ module.exports = {
         allowNull:false,default:0
       },
       createdAt: {
+        defaultValue: sequelize.literal('now()'),
         allowNull: false,
         type: Sequelize.DATE
       },
