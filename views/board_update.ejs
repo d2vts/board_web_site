@@ -8,7 +8,7 @@
 <h1>목록 추가하기</h1>
 <hr>
 
-<form action="/board/update_process/<%=post.id %>?_method=PUT" method="post">
+<form action="/board/update_process/<%=post.id %>?_method=PUT" method="POST">
     <table>
         <tr>
             <td><input type="text" name="editTitle" value="<%= post.title %>" id="post_title" required></td>

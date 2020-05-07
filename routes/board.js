@@ -107,5 +107,19 @@ router.put('/update_process/:id', function (req, res, next) {
       console.log("데이터 수정 실패");
     })
 });
+router.delete('/delete_process/:id', function(req, res, next) {
+  console.log("board에 프로세스까지는 옴")
+  let postID = req.params.id;
+
+  models.post.destroy({
+    where: {id: postID}
+  })
+  .then( result => {
+    res.redirect("/board")
+  })
+  .catch( err => {
+    console.log("데이터 삭제 실패");
+  });
+});
 
 module.exports = router;

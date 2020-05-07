@@ -23,8 +23,7 @@
                 <td><%= post.views %></td>
                 <td><%= post.createdAt.toLocaleString() %></td>
                 <td><button ><a href="/board/update/<%=post.id%>">수정하기</a></button></td>
-            
-            <form action="/board/<%=post.id%>?_method=DELETE" method="post">
+            <form action="/board/delete_process/<%=post.id%>?_method=DELETE" method="POST">
                 <td><input type="submit" value="삭제하기"></input></td>
             </form>
             </tr>
