@@ -11,9 +11,10 @@
         td {
             border: 1px solid gray;
             text-align: center;
-            vertical-align: center;
         }
-
+        #three{
+            border: 0
+        }
         table {
             width: 70%;
         }
@@ -38,7 +39,7 @@
         </tr>
         <tr>
             <td>내용</td>
-            <td colspan=2><%=post.content%></td>
+            <td colspan=2 ><%=post.content%></td>
         </tr>
         <tr>
             <td>
@@ -56,8 +57,39 @@
             </td>
 
         </tr>
-
     </table>
+    <form action="/board/reply_process" method="POST">
+    <table>
+        <tr>
+            <td >작성자</td>
+            <td><input type="text" name="replyWriter" placeholder="작성자 입력"id="post_title" required></td>
+            <td><input type="submit" value="저장"></td>
+            <input type="hidden" name="replyPostId" value="<%=post.id%>">
+        </tr>
+        <tr>
+            <td>댓글</td>
+            <td colspan=2><textarea name="replyContent" cols="50" rows="2"></textarea></td>
+        </tr> 
+    </table>
+    </form>
+    <table>
+        <tr>
+            <td id ="three">-</td>
+            <td id ="three">-comment-</td>
+            <td id ="three">-</td>
+        </tr>
+        <% for(let reply of replies) { %>
+        <tr>
+            <td>작성자</td>
+            <td colspan=2><%=reply.writer%></td>
+        </tr>
+        <tr>
+            <td>댓글내용</td>
+            <td colspan=2><%=reply.content%></td>
+        </tr>
+        <% } %>
+    </table>
+
 </body>
 
 </html>

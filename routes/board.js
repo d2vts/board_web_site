@@ -26,8 +26,9 @@ router.get('/list/1', function (req, res, next) {
       posts: result
     });
   });
+  
 });
-
+/*
 router.get('/list/:page', function (req, res, next) {
   var page = req.params.page;
   models.post.findAll().then(result => {
@@ -36,7 +37,7 @@ router.get('/list/:page', function (req, res, next) {
     });
   });
 });
-
+*/
 
 router.get('/create', function (req, res, next) {
   res.render('board_create', { title: 'Express' });
@@ -44,7 +45,6 @@ router.get('/create', function (req, res, next) {
 
 router.post('/create_process', function (req, res, next) {
   let body = req.body;
-
   models.post.create({
     title: body.inputTitle,
     writer: body.inputWriter,
@@ -62,19 +62,24 @@ router.post('/create_process', function (req, res, next) {
 
 router.get('/detail/:id', function (req, res, next) {
   let postID = req.params.id;
-  console.log("detail - postId : [", postID,"] selected ")
+    console.log("req.parmas.id의 값은 : ", postID);
   models.post.findOne({
     where: { id: postID }
   }).then(result => {
+    models.reply.findAll({
+      where:{postId:postID}
+    }).then(result2 =>{ 
+      console.log(result2),
     res.render("board_detail", {
-      post: result
+      post: result,replies:result2
     });
+    })
   })
 });
 
+
 router.get('/update/:id', function(req, res, next) {
   let postID = req.params.id;
-
   models.post.findOne({
     where: {id: postID}
   })
@@ -113,6 +118,9 @@ router.delete('/delete_process/:id', function(req, res, next) {
 
   models.post.destroy({
     where: {id: postID}
+  }).
+  models.reply.destroy({
+    where: {postId: postID}
   })
   .then( result => {
     res.redirect("/board")
@@ -121,5 +129,25 @@ router.delete('/delete_process/:id', function(req, res, next) {
     console.log("데이터 삭제 실패");
   });
 });
+
+router.post('/reply_process', function (req, res, next) {
+  let body = req.body;
+  var redirect_url='';
+  console.log("reply_process에 들어온 req.body =",req.body)
+  models.reply.create({
+    postId : body.replyPostId,
+    writer: body.replyWriter,
+    content: body.replyContent
+  })
+    .then(result => {
+      redirect_url="/board/detail/"+String(result.postId);
+      res.redirect(redirect_url);
+      console.log("데이터 추가 성공");
+    })
+    .catch(err => {
+      console.log("데이터 추가 실패");
+    })
+});
+
 
 module.exports = router;
