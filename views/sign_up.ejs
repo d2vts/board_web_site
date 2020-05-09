@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="javascripts/sign_up.js"></script>
+    
+    <meta charset="UTF-8">
+    <title>sign_up</title>
+</head>
+
+<body>
+    <h1 id="sign_up_h1">회원가입</h1>
+    <div class="sign_up_form">
+        <form action="/sign_up_process" method="post">
+            <p>이메일 주소 </p>
+            <p><input type="email" name="email" required></p>
+            <br />
+            <p>비밀번호</p>
+            <p><input type="password" name="password" id="pw" required></p>
+            <br id = "pw_form_check_br" />
+            <p id= "pw_form_error" style="display:none; color:red; font-size: 8px;">8~16자 영문대소문자, 숫자, 특수문자를 사용하세요</p>
+            <p>비밀번호 확인</p>
+            <p><input type="password" name="password_check" id="pw2" required></p>
+            <p id= "pw2_form_error" style="display:none; color:red; font-size: 11px;">비밀번호가 일치하지 않습니다.</p>
+            <p id= "pw2_form_ok" style="display: none; color:lawngreen; font-size: 11px;">비밀번호 확인 일치</p>
+            <br id = "pw2_form_check_br"/>
+            <p>닉네임</p>
+            <p><input type="text" name="nick_name" required></p>
+            <br />
+            <p>전화번호</p>
+            <p><input type="tel" name="telephone" required></p>
+            <br />
+            <p>지역</p>
+            <p><input type="text" name="area" required></p>
+            <br />
+            <input type="radio" id="man" name="gender" value="male" required />
+            <label for="man">남성</label>
+            <input type="radio" id="woman" name="gender" value="female" />
+            <label for="woman">여성</label>
+            <br />
+            <p>
+                <input id="sign_up_submit" type="submit" value="회원 가입 신청">
+            </p>
+        </form>
+        <script>
+
+        </script>
+    </div>
+    <div>
+
+    </div>
+    <style>
+        body {
+            margin: 0 auto;
+            align-content: center;
+        }
+
+        #sign_up_h1 {
+            text-align: center;
+        }
+
+        .sign_up_form {
+            margin: 0 auto;
+            padding: 0 40%;
+        }
+
+        #sign_up_submit {
+            background: rgb(0, 118, 255);
+            color: white;
+            width: 100%;
+            height: 10%;
+            border-radius: 7px 7px 7px 7px;
+        }
+    </style>
+</body>
+
+</html>
