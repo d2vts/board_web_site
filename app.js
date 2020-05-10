@@ -11,13 +11,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
 var boardRouter = require('./routes/board');
+var user2Router = require('./routes/user2');
 var app = express();
 
 //db sync(?)
 models.sequelize.sync().then( () => {
-  console.log(" DB 연결 성공");
+  console.log("sequelize를 통한 DB 연결 성공");
 }).catch(err => {
-  console.log("연결 실패");
+  console.log("sequelize를 통한 DB 연결 실패");
   console.log(err);
 })
 
@@ -36,6 +37,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter);
 app.use('/board', boardRouter);
+app.use('/user2', user2Router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
