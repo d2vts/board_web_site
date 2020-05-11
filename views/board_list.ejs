@@ -14,7 +14,6 @@
             <td>작성자</td>
             <td>조회수</td>
             <td>작성일</td>
-            <td colspan=2><a href="/board/create">글 작성하기</a></td>
         </tr>
         <% for(let post of posts) { %>
             <tr>
@@ -22,12 +21,13 @@
                 <td><%= post.writer %></td>
                 <td><%= post.views %></td>
                 <td><%= post.createdAt.toLocaleString() %></td>
-                <td><button ><a href="/board/update/<%=post.id%>">수정하기</a></button></td>
-            <form action="/board/delete_process/<%=post.id%>?_method=DELETE" method="POST">
-                <td><input type="submit" value="삭제하기"></input></td>
-            </form>
             </tr>
         <% } %>
     </table>
+    <% if(sess!=undefined){ %>
+    <span ><a href="/board/create">글 작성하기</a></span>
+    <%}else{%>
+    <span ><a href="/login/towrp">글 작성하기</a></span>
+    <% }%>
 </body>
 </html>

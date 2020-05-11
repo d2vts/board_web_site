@@ -15,10 +15,17 @@
     <div id="header_up">
       <a class="h_ups" id="home_icon" href="#">&#xe800</a>
       <h1 class="h_ups" id="main_title">D2VTS</h1>
+      <% if(session.idx){ %>
+        <div class="h_ups" id=login_div>
+          <a href="/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
+          <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
+        </div>
+        <% } else{ %>
       <div class="h_ups" id=login_div>
         <a href="/sign_up" class="loginbtns" id="sign_up_btn">&nbsp;회원가입&nbsp;</a>
         <a href="/login" class="loginbtns" id="login_btn">&nbsp;로그인&nbsp;</a>
       </div>
+      <% } %>
     </div>
     <div id="header_down">
       <ul id=main_menu>
@@ -40,7 +47,6 @@
       <h2 id="best_ssul"> Web Developer. Lee Tae Seung</h2>
       <p> Node.js를 이용한 게시판형 웹페이지  </p>
       <br><br>
-      <a href="#">[ 이동 ]</a>
     </div>
     <div id="section_down">
       <div id="left_article">
@@ -49,11 +55,9 @@
         </div>
         <div class="gesiguel">
           <ul class="gesiguel_ul">
-            <li><a href="#">▷ 새로운 게시글입니다.</a></li>
-            <li><a href="#">▷ [답글] 새로운 게시글입니다.</a></li>
-            <li><a href="#">▷ [답글] [답글] 새로운 게시글입니다2.</a></li>
-            <li><a href="#">▷ 새글</a></li>
-            <li><a href="#">▷ 어쩌피 프론트</a></li>
+            <% for(let post of posts) { %>
+              <li><a href="/board/detail/<%= post.id%>">▷ <%= post.content %></a></li>
+          <% } %>
           </ul>
         </div>
       </div>
@@ -79,12 +83,12 @@
         <a href="#"> ㅡㅡ 위로 ㅡㅡ</a>
       </div>
       <div id="f_mid">
-        <span id="f_adrs_span"> | 주소 부산광역시 해운대구 | </span>
+        <span id="f_adrs_span"> | 주소 부산광역시 | </span>
         <span id="f_email_span"> | E - mail : dev.taeseung@gmail.com | </span>
       </div>
       <div id="f_bot">
         <span id="f_blog_span"> | <a href="https://naver.com">네이버 블로그</a> | </span>
-        <span id="f_cpr_span"> | copyright(c) 2020 LTS.com | </span>
+        <span id="f_cpr_span"> | <a href="https://github.com/d2vts/board_web_site">Git Hub</a> | </span>
       </div>
     </div>
   </footer>

@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
-
 /*
 router.get('/', function(req, res, next) {
   models.post.findAll().then( result => {
@@ -21,9 +20,12 @@ router.get('/list', function (req, res, next) {
 });
 
 router.get('/list/1', function (req, res, next) {
+  let session = req.session;
+  var sess = req.session.idx;
+  console.log("sess : ",sess);
   models.post.findAll().then(result => {
     res.render("board_list", {
-      posts: result
+      posts: result,sess:sess
     });
   });
   
