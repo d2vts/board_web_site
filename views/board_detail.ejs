@@ -12,9 +12,11 @@
             border: 1px solid gray;
             text-align: center;
         }
-        #three{
+
+        #three {
             border: 0
         }
+
         table {
             width: 70%;
         }
@@ -22,11 +24,12 @@
         .UDL {
             width: 70px;
         }
-        #del_td{
+
+        #del_td {
             margin: 0 auto;
         }
     </style>
-    <h1>게시글 수정하기</h1>
+    <h1>게시글</h1>
     <hr>
     <table>
         <tr>
@@ -35,12 +38,18 @@
         </tr>
         <tr>
             <td>작성자</td>
-            <td colspan=2><%=post.writer%></td>
+            <% for(let user of users){ %>
+                <% if(user.id==post.user_id){ %>
+            <td colspan=2><%=user.nickname%></td>
+            <%}}%>
+            <!-- 여기 작성자의 post.writer 에는 현재 세션의 nickname값이 들어가도록 함 -->
         </tr>
         <tr>
             <td>내용</td>
-            <td colspan=2 ><%=post.content%></td>
+            <td colspan=2><%=post.content%></td>
         </tr>
+        <% if(ssnum==post.user_id){ %>
+            
         <tr>
             <td>
                 <button><a class="UDL" href="/board/update/<%=post.id%>">수정하기</a></button>
@@ -52,43 +61,46 @@
                     </form>
                 </div>
             </td>
-            <td>
-                <button><a class="UDL" href="/board">목록으로</a></button>
-            </td>
-
         </tr>
+        <%}%>
     </table>
+    <button><a class="UDL" href="/board">목록으로</a></button>
     <form action="/board/reply_process" method="POST">
-    <table>
-        <tr>
-            <td >작성자</td>
-            <td><input type="text" name="replyWriter" placeholder="작성자 입력"id="post_title" required></td>
-            <td><input type="submit" value="저장"></td>
+
+
+
+        <table>
+            <input type="hidden" name="replyWriter" value="<%=sess%>" id="post_title" required>
             <input type="hidden" name="replyPostId" value="<%=post.id%>">
-        </tr>
-        <tr>
-            <td>댓글</td>
-            <td colspan=2><textarea name="replyContent" cols="50" rows="2"></textarea></td>
-        </tr> 
-    </table>
+            <tr>
+                <td colspan><textarea name="replyContent" cols="50" rows="2"></textarea></td>
+                <% if(sess!=undefined){ %>
+                <td><input type="submit" value="댓글 등록"></td>
+                <%}else{%>
+                    <td><button><a href="/login">댓글 등록</a></button></td>
+                <%}%>
+            </tr>
+        </table>
     </form>
+    <h3>댓글</h3>
     <table>
-        <tr>
-            <td id ="three">-</td>
-            <td id ="three">-comment-</td>
-            <td id ="three">-</td>
-        </tr>
         <% for(let reply of replies) { %>
-        <tr>
-            <td>작성자</td>
-            <td colspan=2><%=reply.writer%></td>
-        </tr>
-        <tr>
-            <td>댓글내용</td>
-            <td colspan=2><%=reply.content%></td>
-        </tr>
-        <% } %>
-    </table>
+            <tr>
+                
+                <% for(let user of users) { %>
+                    <% if(reply.user_id==user.id){ %>
+                <td colspan=2><%=user.nickname%></td>
+                <%}}%>
+                <td colspan=2><%=reply.content%></td>
+
+                <% if(reply.user_id==ssnum){%>
+                <td><form id="del_td" action="/board/reply_delete/<%=reply.id%>/<%=post.id%>?_method=DELETE" method="post">
+                    <input type="submit" value="삭제"></input>
+                </form></td>
+                <%}%>
+            </tr>
+            <% } %>
+        </table>
 
 </body>
 

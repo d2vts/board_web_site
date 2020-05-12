@@ -5,10 +5,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    writer:{
-      type: DataTypes.STRING,
+    user_id:{
+      type: DataTypes.INTEGER,
       allowNull: false
-    },content:{
+    },
+    content:{
       type: DataTypes.TEXT
     },
     views:{
@@ -19,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   post.associate = function(models) {
     post.hasMany(models.reply);
+    post.belongsTo(models.user,{
+      foreignKey:"user_id",onDelete: 'cascade'
+  });
   };
   return post;
 };

@@ -14,8 +14,8 @@ module.exports = {
       },content:{
         type: Sequelize.TEXT
       },
-      writer: {
-        type: Sequelize.STRING,
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull:false
       },
       views: {

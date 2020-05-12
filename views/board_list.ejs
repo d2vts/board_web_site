@@ -10,19 +10,27 @@
     <h1> 게시판 </h1>
     <table>
         <tr>
-            <td>제목</td>
-            <td>작성자</td>
-            <td>조회수</td>
-            <td>작성일</td>
+            <th>제목</td>
+            <th>작성자</td>
+            <th>조회수</td>
+            <th>작성일</td>
         </tr>
         <% for(let post of posts) { %>
             <tr>
                 <td><a href="/board/detail/<%=post.id%>"><%= post.title %></a></td>
-                <td><%= post.writer %></td>
+                <!-- 아래의 작성자에 user테이블을 이용해서 user.id에 해당하는 user.nickname을 넣어줘야함 -->
+                <% for(let user of users){ %>
+                <% if(post.user_id==user.id){ %>
+                <td><%= user.nickname %></td>
                 <td><%= post.views %></td>
                 <td><%= post.createdAt.toLocaleString() %></td>
+                <%}}%>
             </tr>
-        <% } %>
+            <%} %>
+
+
+
+
     </table>
     <% if(sess!=undefined){ %>
     <span ><a href="/board/create">글 작성하기</a></span>

@@ -14,7 +14,7 @@
             <td><input type="text" name="editTitle" value="<%= post.title %>" id="post_title" required></td>
         </tr>
         <tr>
-            <td><input type="text" name="editWriter" value="<%= post.writer %>" id="post_writer" required></td>
+            <td><input type="text" name="editWriter" value="<%= session %>" id="post_writer" required readonly></td>
         </tr>
         <tr>
             <td><textarea name="editContent" id="content" cols="30" rows="10" id="post_content" required><%= post.content%></textarea></td>

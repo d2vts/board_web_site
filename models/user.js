@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false}
   }, {});
   user.associate = function (models) {
-    // associations can be defined here
+    user.hasMany(models.post);
+    user.hasMany(models.reply);
   };
   return user;
 };

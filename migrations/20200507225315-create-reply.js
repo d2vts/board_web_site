@@ -12,8 +12,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      writer: {
-        type: Sequelize.STRING,
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       content: {

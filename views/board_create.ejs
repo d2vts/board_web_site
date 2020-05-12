@@ -8,18 +8,17 @@
 <h1>목록 추가하기</h1>
 <hr>
 
+<!-- 여기에 들어 와야 하는 값 : 로그인 되어 있는 아이디 값  -->
 <form action="/board/create_process" method="POST">
     <table>
         <tr>
             <td><input type="text" name="inputTitle" placeholder="제목을 입력하세요."id="post_title" required></td>
         </tr>
         <tr>
-            <td><input type="text" name="inputWriter" placeholder="작성자를 입력하세요." id="post_writer" required></td>
-        </tr>
-        <tr>
             <td><textarea name="inputContent" cols="30" rows="10" id="post_content" required></textarea></td>
         </tr>
     </table>
+     <input type="hidden" name="inputUserID" value="<%=user_info%>" required> 
     <input type="submit" value="저장">
 </form>
 </body>

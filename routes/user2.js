@@ -67,10 +67,10 @@ router.post('/login', function (req, res, next) {
   var input = req.body;
   var inputPassword = input.password;
   console.log("input 값은 : ", input)
-  db.query(`select user_id, password from users where user_id=?`,
+  db.query(`select id,user_id, password,nickname from users where user_id=?`,
     [input.id],
     function (err, result) {
-      console.log("reulst 값은 : ", result[0]);
+      console.log("rsulst 값은 : ", result[0]);
       if (err) {
         throw err;
       }
@@ -83,6 +83,9 @@ router.post('/login', function (req, res, next) {
         if (dbpassword === hashPassword) {
           console.log("비밀번호 일치");
           req.session.idx = input.id;
+          req.session.nickname= result[0].nickname;
+          req.session.idnum = result[0].id;
+          console.log("user테이블에서 id 값을 받으면 : ",result[0].id);
           console.log("input.id의 값은 : ", input.id);
           console.log("로그인합니다 세션값은 :",req.session.idx);
           res.redirect("/");
