@@ -14,9 +14,16 @@ console.log("session.id의 값은 : ",session.id);
     limit: 5,
     order: [['createdAt', 'DESC']]
   }).then( result => {
-    res.render("index", {
-      posts: result, session:session
-    });
+
+    models.post.findAll({
+      limit: 5,
+    order: [['views', 'DESC']]}).then( result2 =>{
+
+      res.render("index", {
+        posts: result, session:session, postv: result2
+      });
+    })
+
   });
 });
 
@@ -42,12 +49,5 @@ router.get("/logout", function(req,res,next){
 router.get('/sign_up', function (req, res, next){
   res.render('sign_up');
 })
-/*
-let client = mysql.createConnection({
-  user: 'root',
-  password: '1q2w3e4r5t',
-  database: 'sign_db'
-})
-*/
 
 module.exports = router;

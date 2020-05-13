@@ -56,20 +56,20 @@
         <div class="gesiguel">
           <ul class="gesiguel_ul">
             <% for(let post of posts) { %>
-              <li><a href="/board/detail/<%= post.id%>">▷ <%= post.content %></a></li>
+              <li><a href="/board/detail/<%= post.id%>">▷ <%= post.title %></a></li>
           <% } %>
           </ul>
         </div>
       </div>
       <div id="right_article">
         <div id=rct_favorites>
-          <a class="rct_a" href="#">최근 인기 게시글</a>
+          <a class="rct_a" href="/board">인기 게시글</a>
         </div>
         <div class="gesiguel">
           <ul class="gesiguel_ul">
-            <li><a href="#">▷ 새로운 게시글입니다.</a></li>
-            <li><a href="#">▷ [답글] 새로운 게시글입니다.</a></li>
-            <li><a href="#">▷ 어쩌피 프론트</a></li>
+            <% for(var i = 0 ; i < postv.length; i++ ) {%>
+            <li><a href="/board/detail/<%= postv[i].id%>">▷ <%= postv[i].title %></a> <span style="font-size: 8px; border: 1px solid gray;">조회수 <%=i+1%>위</span></li>
+            <%}%>
           </ul>
         </div>
       </div>

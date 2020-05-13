@@ -3,109 +3,126 @@ var router = express.Router();
 var models = require('../models');
 var db = require('../lib/db');
 
-
 router.get('/', function (req, res, next) {
   res.redirect('/board/list/1');
 });
 
-
-
-
-
-
-
-
-
 router.get('/list/:page', function (req, res, next) {
-  var sess = req.session;
-  var pageNow = req.params.page; // querystring으로 받아낸 현재 페이지 값
-  pageNow = parseInt(pageNow, 10); // Integer형식으로 변경한 현재 페이지 값
-  var listCnt = 10; // 한 페이지에 출력할 게시물 수
-  var pageCnt = 10; // 한 화면에 출력할 페이지의 수
-  var pageBegin = (pageNow-1)*listCnt;
-  db.query(`SELECT id,nickname FROM users`, function (err, users_info) {
-    db.query(`SELECT COUNT(*) AS cnt from posts`,
-      function (err, result) {0
-        var totalCnt = result[0].cnt; // 게시물의 총 개수
-        var totalPage = Math.floor(totalCnt / listCnt); // 총 페이지의 수
-        if (totalCnt % listCnt > 0) totalPage++; // 페이지 나머지가 존재한다면 총 페이지의 수 +1
-        if (totalPage < pageNow) pageNow = totalPage; // 현재 페이지가 총 페이지의 수보다 크다면 총 페이지 번호로 강제 치환
-        var startPage = Math.floor((pageNow-1)/pageCnt) * pageCnt + 1; // 화면에 표시할 시작페이지  ((page - 1) / 10) * 10 + 1;
-        var endPage = startPage + pageCnt - 1; // 화면에 표시할 끝페이지
-        console.log("if문에 들어가기 전의 endPage 값 : ", endPage);
-        console.log("totalCnt의 값 : ", totalCnt); // 게시물이 11개라서 11이라고 뜸
-        if (endPage > totalPage) {endPage = totalPage;}  //  totalPage가 23이라고 했을때 endPage가 30이 되면 안되기 때문에 강제 보정
-console.log("pageNow(현재페이지): ",pageNow);
-console.log("listCnt(한 페이지에 출력할 게시물 수) : ", listCnt);
-console.log("pageCnt(한 화면에 출력할 페이지의 수) : ", pageCnt);
-console.log("totlaCnt(총 게시물의 개수) : ",totalCnt);
-console.log("totalPage(총 페이지의 개수) : ",totalPage);
-console.log("startPage(화면에 표시할 시작페이지) : ",startPage);
-console.log("endPage(화면에 표시할 끝페이지) : ",endPage);
 
+  if (req.query._query == undefined) {
+    var sess = req.session;
+    var pageNow = req.params.page; // querystring으로 받아낸 현재 페이지 값
+    pageNow = parseInt(pageNow, 10); // Integer형식으로 변경한 현재 페이지 값
+    var listCnt = 10; // 한 페이지에 출력할 게시물 수
+    var pageCnt = 10; // 한 화면에 출력할 페이지의 수
+    var pageBegin = (pageNow - 1) * listCnt;
 
+    
+    db.query(`SELECT id,nickname FROM users`, function (err, users_info) {
+      db.query(`SELECT COUNT(*) AS cnt from posts`,
+        function (err, result) {
 
+          var totalCnt = result[0].cnt; // 게시물의 총 개수
+          var totalPage = Math.floor(totalCnt / listCnt); // 총 페이지의 수
+          if (totalCnt % listCnt > 0) totalPage++; // 페이지 나머지가 존재한다면 총 페이지의 수 +1
+          if (totalPage < pageNow) pageNow = totalPage; // 현재 페이지가 총 페이지의 수보다 크다면 총 페이지 번호로 강제 치환
+          var startPage = Math.floor((pageNow - 1) / pageCnt) * pageCnt + 1; // 화면에 표시할 시작페이지  ((page - 1) / 10) * 10 + 1;
+          var endPage = startPage + pageCnt - 1; // 화면에 표시할 끝페이지
+          console.log("if문에 들어가기 전의 endPage 값 : ", endPage);
+          console.log("totalCnt의 값 : ", totalCnt); // 게시물이 11개라서 11이라고 뜸
+          if (endPage > totalPage) { endPage = totalPage; }  //  totalPage가 23이라고 했을때 endPage가 30이 되면 안되기 때문에 강제 보정
+          console.log("pageNow(현재페이지): ", pageNow);
+          console.log("listCnt(한 페이지에 출력할 게시물 수) : ", listCnt);
+          console.log("pageCnt(한 화면에 출력할 페이지의 수) : ", pageCnt);
+          console.log("totlaCnt(총 게시물의 개수) : ", totalCnt);
+          console.log("totalPage(총 페이지의 개수) : ", totalPage);
+          console.log("startPage(화면에 표시할 시작페이지) : ", startPage);
+          console.log("endPage(화면에 표시할 끝페이지) : ", endPage);
+          db.query(`SELECT * FROM posts ORDER BY createdAt desc limit ${pageBegin},${listCnt}`, function (err, result) {
 
+            console.log("limit문을 쓴 SQL문에서 나온 값 : ", result);
+            var fromRouterData = {
+              post: result, pageNow: pageNow, listCnt: listCnt,
+              pageCnt: pageCnt, totalPage: totalPage, startPage: startPage,
+              endPage: endPage, sess: sess, users: users_info
+            };
+            res.render("board_list", fromRouterData);
 
-
-
-
-
-
-
-
-        db.query(`SELECT * FROM posts ORDER BY createdAt desc limit ?,?`, [ pageBegin, listCnt], function (err, result) {
-          
-          console.log("limit문을 쓴 SQL문에서 나온 값 : ", result);
-          var fromRouterData = {
-            post: result, pageNow: pageNow, listCnt: listCnt,
-            pageCnt: pageCnt, totalPage: totalPage, startPage: startPage,
-            endPage: endPage, sess: sess,users:users_info
-          };
-          res.render("board_list",fromRouterData);
-
+          });
         });
-      });
-  });
+    });
+  }
+  else {
+    console.log("#######################검색했을때임##########################");
+    var sess = req.session;
+    var pageNow = req.params.page; // querystring으로 받아낸 현재 페이지 값
+    pageNow = parseInt(pageNow, 10); // Integer형식으로 변경한 현재 페이지 값
+    var listCnt = 10; // 한 페이지에 출력할 게시물 수
+    var pageCnt = 10; // 한 화면에 출력할 페이지의 수
+    var pageBegin = (pageNow - 1) * listCnt;
+    db.query(`SELECT id,nickname FROM users`, function (err, users_info) {
+      db.query(`SELECT COUNT(*) AS cnt from posts`,
+        function (err, result) {
+
+          var totalCnt = result[0].cnt; // 게시물의 총 개수
+          var totalPage = Math.floor(totalCnt / listCnt); // 총 페이지의 수
+          if (totalCnt % listCnt > 0) totalPage++; // 페이지 나머지가 존재한다면 총 페이지의 수 +1
+          if (totalPage < pageNow) pageNow = totalPage; // 현재 페이지가 총 페이지의 수보다 크다면 총 페이지 번호로 강제 치환
+          var startPage = Math.floor((pageNow - 1) / pageCnt) * pageCnt + 1; // 화면에 표시할 시작페이지  ((page - 1) / 10) * 10 + 1;
+          var endPage = startPage + pageCnt - 1; // 화면에 표시할 끝페이지
+          console.log("if문에 들어가기 전의 endPage 값 : ", endPage);
+          console.log("totalCnt의 값 : ", totalCnt); // 게시물이 11개라서 11이라고 뜸
+          if (endPage > totalPage) { endPage = totalPage; }  //  totalPage가 23이라고 했을때 endPage가 30이 되면 안되기 때문에 강제 보정
+          console.log("pageNow(현재페이지): ", pageNow);
+          console.log("listCnt(한 페이지에 출력할 게시물 수) : ", listCnt);
+          console.log("pageCnt(한 화면에 출력할 페이지의 수) : ", pageCnt);
+          console.log("totlaCnt(총 게시물의 개수) : ", totalCnt);
+          console.log("totalPage(총 페이지의 개수) : ", totalPage);
+          console.log("startPage(화면에 표시할 시작페이지) : ", startPage);
+          console.log("endPage(화면에 표시할 끝페이지) : ", endPage);
+         
+          var content_db_query = `SELECT * FROM posts WHERE content like '%${req.query._query}%' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
+          var title_db_query = `SELECT * FROM posts WHERE title like '%${req.query._query}%' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
+          var contentitle_db_query = `SELECT * FROM posts WHERE content like '%${req.query._query}%' or title like '%${req.query._query}%' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
+          var input_db_query=content_db_query;
+
+          console.log("input_db_query : ",input_db_query);
+
+          if(req.query.find_type=='title'){
+          input_db_query=title_db_query;
+          } else if(req.query.find_type=='content'){
+            input_db_query=content_db_query;
+          } else if(req.query.find_type=='contentitle'){
+            input_db_query=contentitle_db_query;
+          } else{ //writer
+
+          }
+          
+          
+          db.query(`${input_db_query}`, function (err, result) {
+
+            console.log("result:", result);
+            var fromRouterData = {
+              post: result, pageNow: pageNow, listCnt: listCnt,
+              pageCnt: pageCnt, totalPage: totalPage, startPage: startPage,
+              endPage: endPage, sess: sess, users: users_info
+            };
+            res.render("board_list", fromRouterData);
+
+          });
+        });
+    });
+
+  }
 
 
 
 
 
-  /*
-  
-  
-    console.log('users_info : ', users_info);
-    models.post.findAll().then(result => {
-      for(var i = 0 ; i < users_info.length; i++){
-        console.log("result.length-1 : ", result.length-1);
-      }
 
-      res.render("board_list", {
-        posts: result,users:users_info ,page:page,sess: sess.idx,length:result.length-1,page_num:1
 
-      })
-    })
-  });
-*/
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 router.get('/create', function (req, res, next) {
   let sess = req.session.idx;
@@ -262,6 +279,11 @@ router.post('/reply_process', function (req, res, next) {
       })
   });
 });
+
+
+
+
+
 
 
 module.exports = router;

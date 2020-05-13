@@ -75,5 +75,22 @@
     <%}else{%>
     <span ><a href="/login/towrp">글 작성하기</a></span>
     <% }%>
+
+
+    <form action="/board/list/<%=pageNow%>">
+
+        <select name="find_type">
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="contentitle">제목+내용</option>
+            <option value="writer">작성자</option>
+        </select><input name="_query" placeholder="검색어 입력" type="text"><input type="submit" value="검색">
+
+    </form>
+
+
+
+
+
 </body>
 </html>
