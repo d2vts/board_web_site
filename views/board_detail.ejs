@@ -74,7 +74,7 @@
             <input type="hidden" name="replyPostId" value="<%=post.id%>">
             <tr>
                 <td colspan><textarea name="replyContent" cols="50" rows="2"></textarea></td>
-                <% if(sess!=undefined){ %>
+                <% if(ssnum!=undefined){ %>
                 <td><input type="submit" value="댓글 등록"></td>
                 <%}else{%>
                     <td><button><a href="/login">댓글 등록</a></button></td>

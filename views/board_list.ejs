@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <style>td{border:1px solid gray;}</style>
+    <style>td{border:1px solid gray;}a{text-decoration: none;}</style>
     <h1> 게시판 </h1>
     <table>
         <tr>
@@ -15,21 +15,59 @@
             <th>조회수</td>
             <th>작성일</td>
         </tr>
-        <% for(let post of posts) { %>
+        <% for(var i = 0; i< listCnt; i++){%>
+            <% if( post[i] != undefined){ %>
             <tr>
-                <td><a href="/board/detail/<%=post.id%>"><%= post.title %></a></td>
+                <td><a href="/board/detail/<%=post[i].id%>"><%= post[i].title %></a></td>
                 <!-- 아래의 작성자에 user테이블을 이용해서 user.id에 해당하는 user.nickname을 넣어줘야함 -->
                 <% for(let user of users){ %>
-                <% if(post.user_id==user.id){ %>
+                <% if(post[i].user_id==user.id){ %>
                 <td><%= user.nickname %></td>
-                <td><%= post.views %></td>
-                <td><%= post.createdAt.toLocaleString() %></td>
+                <td><%= post[i].views %></td>
+                <td><%= post[i].createdAt.toLocaleString() %></td>
                 <%}}%>
             </tr>
+            <%} else {%>
+            <%}%>
             <%} %>
 
+                <!-- /////////////////////////////////// -->
+                <tr class="main-table" id="page">
+                    <td class="align" id="page_td" colspan="14">
+                    
+                        <% if(pageNow > 1){ %>
+                            <% if(startPage==1) {%>
+                                [<a href="/board/list/1">◀◀</a>]
+                                <%} else {%>
+                            [<a href="/board/list/<%=startPage-1%>">◀◀</a>]
+                            <%}%>
+                            [<a href="/board/list/<%= pageNow - 1 %>">◀</a>]
+                        <% } else{ %>
+                            <button onclick="alert('첫 페이지 입니다.')"><a href="/board/list/1">■</a></button>
+                            <% } %>
 
+                            <% for(var i = startPage  ; i <= endPage ; i++ ){ %>
+                            <% if(i==pageNow){ %>
+                                [ <span style="font-weight: bold;"><%= i %></span> ]
+                                <% } else { %>
+                                    [<a href="/board/list/<%=i%>"><%=i%></a>]
+                                    <% }} %>
 
+                            <% if(pageNow < totalPage){ %>
+                                [<a href="/board/list/<%= pageNow + 1 %>">▶</a>]
+
+                                <% if(endPage+1>totalPage){ %>
+                                    [<a href="/board/list/<%= endPage  %>">▶▶</a>]
+                                    <% }else { %>
+                                [<a href="/board/list/<%= endPage +1 %>">▶▶</a>]
+                                <% } %>
+                            <% } else { %>
+                                <button onclick="alert('마지막 페이지 입니다.')"><a href="/board/list/<%=totalPage%>">■</a></button>
+                                <% } %>
+
+                    </td>
+                </tr>
+                <!-- /////////////////////////////////// -->
 
     </table>
     <% if(sess!=undefined){ %>
