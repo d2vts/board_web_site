@@ -39,8 +39,6 @@ router.get('/list/:page', function (req, res, next) {
           console.log("startPage(화면에 표시할 시작페이지) : ", startPage);
           console.log("endPage(화면에 표시할 끝페이지) : ", endPage);
           db.query(`SELECT * FROM posts ORDER BY createdAt desc limit ${pageBegin},${listCnt}`, function (err, result) {
-
-            console.log("limit문을 쓴 SQL문에서 나온 값 : ", result);
             var fromRouterData = {
               post: result, pageNow: pageNow, listCnt: listCnt,
               pageCnt: pageCnt, totalPage: totalPage, startPage: startPage,
@@ -53,7 +51,8 @@ router.get('/list/:page', function (req, res, next) {
     });
   }
   else {
-    console.log("#######################검색했을때임##########################");
+    console.log("#######################검색했을때##########################");
+    console.log("req.query.find_type : ",req.query.find_type);
     var sess = req.session;
     var pageNow = req.params.page; // querystring으로 받아낸 현재 페이지 값
     pageNow = parseInt(pageNow, 10); // Integer형식으로 변경한 현재 페이지 값
@@ -61,9 +60,10 @@ router.get('/list/:page', function (req, res, next) {
     var pageCnt = 10; // 한 화면에 출력할 페이지의 수
     var pageBegin = (pageNow - 1) * listCnt;
     db.query(`SELECT id,nickname FROM users`, function (err, users_info) {
+     
+      var writer_post_user_id ='';
       db.query(`SELECT COUNT(*) AS cnt from posts`,
         function (err, result) {
-
           var totalCnt = result[0].cnt; // 게시물의 총 개수
           var totalPage = Math.floor(totalCnt / listCnt); // 총 페이지의 수
           if (totalCnt % listCnt > 0) totalPage++; // 페이지 나머지가 존재한다면 총 페이지의 수 +1
@@ -80,7 +80,14 @@ router.get('/list/:page', function (req, res, next) {
           console.log("totalPage(총 페이지의 개수) : ", totalPage);
           console.log("startPage(화면에 표시할 시작페이지) : ", startPage);
           console.log("endPage(화면에 표시할 끝페이지) : ", endPage);
-         
+          
+          for(var i = 0 ; i < users_info.length ; i++){
+          if(users_info[i].nickname==req.query._query){
+            writer_post_user_id=users_info[i].id;
+         }
+        }
+
+          var writer_db_query = `SELECT * FROM posts WHERE user_id ='${writer_post_user_id}' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
           var content_db_query = `SELECT * FROM posts WHERE content like '%${req.query._query}%' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
           var title_db_query = `SELECT * FROM posts WHERE title like '%${req.query._query}%' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
           var contentitle_db_query = `SELECT * FROM posts WHERE content like '%${req.query._query}%' or title like '%${req.query._query}%' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
@@ -95,7 +102,7 @@ router.get('/list/:page', function (req, res, next) {
           } else if(req.query.find_type=='contentitle'){
             input_db_query=contentitle_db_query;
           } else{ //writer
-
+            input_db_query=writer_db_query;
           }
           
           
@@ -114,13 +121,6 @@ router.get('/list/:page', function (req, res, next) {
     });
 
   }
-
-
-
-
-
-
-
 
 });
 
@@ -279,11 +279,5 @@ router.post('/reply_process', function (req, res, next) {
       })
   });
 });
-
-
-
-
-
-
 
 module.exports = router;
