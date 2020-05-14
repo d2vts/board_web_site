@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <% if(pwcf=='no'){ %>
+        <script>alert('비밀번호가 일치하지 않습니다.')</script>
+        <%}%>
+    <div>
+        <form action="/user2/delete_process" method="post">
+            <p>한 번 삭제된 계정은 복구되지 않습니다.</p>
+            <input type="password" name="password" placeholder="비밀번호를 입력하세요"></input>
+            <input type="submit" value="계정삭제">
+        </form>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../../stylesheets/index.css">
+    <link rel="stylesheet" href="../../stylesheets/fontello.css">
+    <script>
+        function confirm_withdraw() {
+            var confirm_delete_account = confirm('계정을 삭제하시겠습니까?')
+            if (confirm_delete_account == true) {
+                location.href = "/user2/delete";
+            } else {
+                return;
+            }
+        }
+        </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div id="header_up">
+            <a class="h_ups" id="home_icon" href="/">&#xe800</a>
+            <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
+            <% if(sess.idx){ %>
+              <div class="h_ups" id=login_div>
+                <a href="/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
+                <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
+              </div>
+              <% } else{ %>
+            <div class="h_ups" id=login_div>
+              <a href="/sign_up" class="loginbtns" id="sign_up_btn">&nbsp;회원가입&nbsp;</a>
+              <a href="/login" class="loginbtns" id="login_btn">&nbsp;로그인&nbsp;</a>
+            </div>
+            <% } %>
+          </div>
+        </header>
+    <h2>반갑습니다 <%=sess.nickname%>님</h2>
+
+    <div style="border: 1px solid gray;">
+
+        <p><span><button><a style="text-decoration: none; color:black"href="/user2/mypage/edit_profile">내 정보 수정</a></button></span></p>
+        <p><span>
+            <button onclick="confirm_withdraw()">회원탈퇴</button></span></p>
+    </div>
+</body>
+</html>

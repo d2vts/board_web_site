@@ -14,10 +14,10 @@
   <header>
     <div id="header_up">
       <a class="h_ups" id="home_icon" href="#">&#xe800</a>
-      <h1 class="h_ups" id="main_title">D2VTS</h1>
+      <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
       <% if(session.idx){ %>
         <div class="h_ups" id=login_div>
-          <a href="/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
+          <a href="/user2/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
           <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
         </div>
         <% } else{ %>
@@ -33,7 +33,6 @@
         <li><a class="mm" href="#">이벤트</a></li>
         <li><a class="mm" href="#">커뮤니티</a>
           <ul id="sub_menu">
-            <li><a href="#">회원게시판</a></li>
             <li><a href="/board">자유게시판</a></li>
           </ul>
         </li>

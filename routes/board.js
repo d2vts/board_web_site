@@ -42,7 +42,7 @@ router.get('/list/:page', function (req, res, next) {
             var fromRouterData = {
               post: result, pageNow: pageNow, listCnt: listCnt,
               pageCnt: pageCnt, totalPage: totalPage, startPage: startPage,
-              endPage: endPage, sess: sess, users: users_info
+              endPage: endPage, sess: sess, users: users_info,reqquery:false
             };
             res.render("board_list", fromRouterData);
 
@@ -60,9 +60,26 @@ router.get('/list/:page', function (req, res, next) {
     var pageCnt = 10; // 한 화면에 출력할 페이지의 수
     var pageBegin = (pageNow - 1) * listCnt;
     db.query(`SELECT id,nickname FROM users`, function (err, users_info) {
-     
+
       var writer_post_user_id ='';
-      db.query(`SELECT COUNT(*) AS cnt from posts`,
+         
+          for(var i = 0 ; i < users_info.length ; i++){
+          if(users_info[i].nickname==req.query._query){
+            writer_post_user_id=users_info[i].id;
+         }
+        }
+     
+      var count_of_find_type_query = '';
+      if(req.query.find_type === 'contentitle'){
+        count_of_find_type_query = `select count(*) cnt from posts where title like '%${req.query._query}%' or content like '%${req.query._query}%'` 
+      } else if(req.query.find_type === 'writer'){
+        count_of_find_type_query = `select count(*) cnt from posts where user_id ='${writer_post_user_id}'`
+      } else{
+        count_of_find_type_query = `select count(*) cnt from posts where ${req.query.find_type} like '%${req.query._query}%'`
+      }
+
+      
+      db.query(`${count_of_find_type_query}`,
         function (err, result) {
           var totalCnt = result[0].cnt; // 게시물의 총 개수
           var totalPage = Math.floor(totalCnt / listCnt); // 총 페이지의 수
@@ -80,12 +97,8 @@ router.get('/list/:page', function (req, res, next) {
           console.log("totalPage(총 페이지의 개수) : ", totalPage);
           console.log("startPage(화면에 표시할 시작페이지) : ", startPage);
           console.log("endPage(화면에 표시할 끝페이지) : ", endPage);
+         
           
-          for(var i = 0 ; i < users_info.length ; i++){
-          if(users_info[i].nickname==req.query._query){
-            writer_post_user_id=users_info[i].id;
-         }
-        }
 
           var writer_db_query = `SELECT * FROM posts WHERE user_id ='${writer_post_user_id}' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
           var content_db_query = `SELECT * FROM posts WHERE content like '%${req.query._query}%' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
@@ -112,7 +125,7 @@ router.get('/list/:page', function (req, res, next) {
             var fromRouterData = {
               post: result, pageNow: pageNow, listCnt: listCnt,
               pageCnt: pageCnt, totalPage: totalPage, startPage: startPage,
-              endPage: endPage, sess: sess, users: users_info
+              endPage: endPage, sess: sess, users: users_info,reqquery:req.query
             };
             res.render("board_list", fromRouterData);
 
@@ -132,10 +145,10 @@ router.get('/create', function (req, res, next) {
       where: { user_id: sess }
     }).then(result => {
       console.log(result[0].dataValues.id),
-        res.render("board_create", { user_info: result[0].dataValues.id });
+        res.render("board_create", { user_info: result[0].dataValues.id, sess:sess });
     })
   }
-  else res.render('error', { message: ' 잘못된 접근입니다. ', error: { status: ' 권한 범위에 없는 요청사항 ' } });
+  else res.redirect('/login');
 });
 
 

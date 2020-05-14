@@ -20,6 +20,7 @@ router.post('/check_id', function (req, res, next) {
 });
 
 router.post('/check_nickname', function (req, res, next) {
+  var sess = req.session;
     let form_nickname = req.body.nickname;
     //body에 객체형태로 nickname값이 들어옴 ex){ { nickname: 'efef' }}
     console.log("회원가입 폼에서 들어온 nickname post 값 : ", form_nickname);
@@ -28,7 +29,11 @@ router.post('/check_nickname', function (req, res, next) {
         if(error) console.log("[mysql] users DB -> user2.js error ");
        var result = '1';
        for(var i = 0 ; i < nickname_in_db.length ; i++){
-        if(nickname_in_db[i].nickname==form_nickname) result ='0';        
+        if(nickname_in_db[i].nickname==form_nickname) {
+          if(form_nickname==sess.nickname){result ='1';}
+          else{result ='2';} 
+       }   
+            
     }
     res.send(result);
     });
@@ -101,5 +106,87 @@ router.post('/login', function (req, res, next) {
         res.redirect("/login");
       }
     });
+});
+
+router.get('/mypage', function(req, res, next) {
+  var sess = req.session;
+
+  if(sess.idx){
+    res.render('mypage',{sess:sess})
+  } else{
+    res.render('error')
+  }
+});
+
+
+
+router.get('/mypage/edit_profile', function (req, res, next) {
+  var sess = req.session;
+  if(sess.idx){
+  db.query(`SELECT * FROM users where user_id='${sess.idx}'`,function(err,result){
+
+
+
+  res.render('edit_profile',{user_info:result[0],sess:sess});
+});
+  }
+  else{
+    res.render('error')
+  }
+});
+
+router.post('/update_process', function (req, res, next) {
+  var sess = req.session;
+  var rbody = req.body;
+
+  console.log("정보들 : ",rbody.nickname,
+    rbody.phone,
+    rbody.area,
+    rbody.id);
+
+
+  db.query(`update users set nickname='${rbody.nickname}', phone='${rbody.phone}', area='${rbody.area}' where user_id='${rbody.id}'`,function(err,result){
+
+    sess.nickname = rbody.nickname;
+
+  res.redirect("/user2/mypage");
+})
+});
+
+
+
+
+
+
+router.get('/delete', function (req, res, next) {
+  if(req.query.pwconfirm){
+  var pwcf = req.query.pwconfirm;
+  console.log("req.query.pwconfirm : ", req.query.pwconfirm);
+  }
+  res.render("withdraw",{sess:req.session,pwcf:pwcf
+  });
+});
+
+router.post('/delete_process', function (req, res, next) {
+  
+  let delete_idnum = req.session.idnum
+  let confirm_pw = req.body.password;
+  var hashPassword = crypto.createHash("sha512").update(confirm_pw).digest("hex");
+  console.log("delete_idnum :",delete_idnum);
+  console.log("confirm_pw :",confirm_pw);
+  console.log("-----------------------------------------------");
+
+  db.query(`select * from users where id=${delete_idnum}`,function(err,result){
+    console.log("지울 계정은 : ",result)
+    
+      if(hashPassword == result[0].password){
+        db.query(`DELETE FROM users WHERE id=${delete_idnum}`,function(err,result){
+          res.redirect("/");
+        })
+      }
+      else{
+        res.redirect('/user2/delete?pwconfirm=no');
+      }
+  })
 });
 module.exports = router;

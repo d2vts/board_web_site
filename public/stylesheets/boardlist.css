@@ -1,0 +1,48 @@
+body {
+    margin: 30px 150px;
+    padding: 0;
+    display: flex;
+    min-width: 730px;
+    flex-flow: column nowrap;
+    justify-content: center;
+    overflow: scroll;
+}
+a{text-decoration: none;}
+header {
+    flex-shrink: 0;
+}
+#header_up {
+    height: 85px;
+    position: relative;
+    text-align: center;
+    line-height: 85px;
+    border-bottom: 1px solid gray;
+}
+#header_up>#home_icon {
+    position: absolute;
+    left: 0;
+    font-family: "fontello";
+    font-size: 100px;
+    color: gray;
+}
+
+#header_up>#main_title {
+    position: relative;
+    font-family: "Roboto", serif;
+    font-size: 50px;
+    margin: 0;
+}
+#login_div {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    line-height: 30px;
+    display: flex;
+}
+
+.loginbtns {
+    border-radius: 12px;
+    background-color: rgb(204, 201, 201);
+    color: rgb(0, 118, 255);
+    margin-right: 20px;
+}
