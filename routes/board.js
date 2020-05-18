@@ -180,18 +180,25 @@ router.get('/detail/:id', function (req, res, next) {
 
     models.post.findOne({
       where: { id: postID }
-    })
-      .then(result => {
+    }).then(result => {
         models.post.update({ views: result.views + 1 }, {
           where: { id: postID }
         }).then(result3 => {
           models.reply.findAll({
             where: { postId: postID }
           }).then(result2 => {
-            console.log("sess로 보내지는 값 : ", sess.idx),
-              res.render("board_detail", {
-                post: result, replies: result2, users: users_info, sess: sess.idx, ssnum: sess.idnum
+            console.log("sess로 보내지는 값 : ", sess.idx);
+            if(sess.idx!=undefined){
+            res.render("board_detail", {
+                post: result, replies: result2, users: users_info, sess:sess
               });
+            } else{
+              res.render("board_detail", {
+                post: result, replies: result2, users: users_info, sess:'no'
+              });
+            }
+
+
           })
         })
       })

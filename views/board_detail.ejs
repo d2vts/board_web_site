@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="stylesheets/fontello.css">
+    <link rel="stylesheet" href="../../stylesheets/index.css">
+    <link rel="stylesheet" href="../../stylesheets/fontello.css">
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
@@ -64,7 +65,7 @@
             <td>내용</td>
             <td colspan=2><%=post.content%></td>
         </tr>
-        <% if(ssnum==post.user_id){ %>
+        <% if(sess.idnum==post.user_id){ %>
             
         <tr>
             <td>
@@ -78,7 +79,10 @@
                 </div>
             </td>
         </tr>
+        <%} else{ %>
+            
         <%}%>
+
     </table>
     <button><a class="UDL" href="/board">목록으로</a></button>
     <form action="/board/reply_process" method="POST">
@@ -86,11 +90,11 @@
 
 
         <table>
-            <input type="hidden" name="replyWriter" value="<%=sess%>" id="post_title" required>
+            <input type="hidden" name="replyWriter" value="<%=sess.idx%>" id="post_title" required>
             <input type="hidden" name="replyPostId" value="<%=post.id%>">
             <tr>
                 <td colspan><textarea name="replyContent" cols="50" rows="2"></textarea></td>
-                <% if(ssnum!=undefined){ %>
+                <% if(sess.idx){ %>
                 <td><input type="submit" value="댓글 등록"></td>
                 <%}else{%>
                     <td><button><a href="/login">댓글 등록</a></button></td>
@@ -109,11 +113,11 @@
                 <%}}%>
                 <td colspan=2><%=reply.content%></td>
 
-                <% if(reply.user_id==ssnum){%>
+                <% if(reply.user_id==sess.idnum){%>
                 <td><form id="del_td" action="/board/reply_delete/<%=reply.id%>/<%=post.id%>?_method=DELETE" method="post">
                     <input type="submit" value="삭제"></input>
                 </form></td>
-                <%}%>
+                <%} else{}%>
             </tr>
             <% } %>
         </table>

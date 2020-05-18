@@ -27,7 +27,7 @@
     </header>
     <h1> 게시판 </h1>
     <table>
-        <tr>
+        <tr style="border-bottom: 1px solid black;">
             <th>제목</td>
             <th>작성자</td>
             <th>조회수</td>
@@ -123,7 +123,7 @@
     <% if(sess!=undefined){ %>
     <span ><a href="/board/create">글 작성하기</a></span>
     <%}else{%>
-    <span ><a href="/login/towrp">글 작성하기</a></span>
+    <span ><a href="/login">글 작성하기</a></span>
     <% }%>
 
 

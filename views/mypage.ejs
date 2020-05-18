@@ -24,7 +24,6 @@
             <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
             <% if(sess.idx){ %>
               <div class="h_ups" id=login_div>
-                <a href="/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
                 <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
               </div>
               <% } else{ %>
@@ -40,6 +39,7 @@
     <div style="border: 1px solid gray;">
 
         <p><span><button><a style="text-decoration: none; color:black"href="/user2/mypage/edit_profile">내 정보 수정</a></button></span></p>
+        <p><span><button><a style="text-decoration: none; color:black"href="/user2/check_password">비밀번호 변경</a></button></span></p>
         <p><span>
             <button onclick="confirm_withdraw()">회원탈퇴</button></span></p>
     </div>

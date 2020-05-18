@@ -59,10 +59,11 @@ router.post('/sign_up_process', function (req, res, next){
     });
 });
 
-router.get('/login', function(req, res, next) {
-    res.render("log_in",{
-    });
-  });
+router.get('/', function(req, res, next) {
+  let before_url = req.headers.referer;
+  if(before_url=='/login')
+  res.render('log_in', {before_url: before_url});
+});
 
 
 
@@ -93,7 +94,7 @@ router.post('/login', function (req, res, next) {
           console.log("user테이블에서 id 값을 받으면 : ",result[0].id);
           console.log("input.id의 값은 : ", input.id);
           console.log("로그인합니다 세션값은 :",req.session.idx);
-          res.redirect("/");
+          res.redirect(`${input.before_url}`);
         }
         else {
           console.log("비밀번호 불일치");
@@ -134,6 +135,54 @@ router.get('/mypage/edit_profile', function (req, res, next) {
     res.render('error')
   }
 });
+
+router.get('/edit_password', function (req,res,next) {
+  var sess = req.session;
+  res.render('edit_password',{sess:sess});
+
+})
+
+
+router.get('/check_password', function (req,res,next) {
+  var sess = req.session;
+  res.render('check_password',{sess:sess, checkpw:'yes'});
+
+})
+
+router.post('/check_password_process', function (req,res,next) {
+  var sess = req.session;
+  var inputPassword = req.body.password;
+  var hashPassword = crypto.createHash("sha512").update(inputPassword).digest("hex");
+  db.query(`SELECT * FROM users where id=${sess.idnum}`,function(err,result){
+    
+    if(hashPassword===result[0].password){
+      console.log("비밀번호 일치!")
+      res.redirect("/user2/edit_password")
+    }
+    else {
+      console.log("틀립니다.")
+    res.render('check_password',{sess:sess,checkpw:'nono'});
+  }
+    
+  })
+
+
+
+
+})
+
+
+router.post('/pw_update_process', function (req, res, next) {
+  var sess = req.session;
+  var inputPassword = req.body.password;
+  var hashPassword = crypto.createHash("sha512").update(inputPassword).digest("hex");
+
+
+  db.query(`update users set password='${hashPassword}' where id=${sess.idnum}`,function(err,result){
+  res.redirect("/user2/mypage");
+})
+});
+
 
 router.post('/update_process', function (req, res, next) {
   var sess = req.session;
