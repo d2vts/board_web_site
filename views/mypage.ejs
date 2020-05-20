@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../../stylesheets/index.css">
-    <link rel="stylesheet" href="../../stylesheets/fontello.css">
     <script>
         function confirm_withdraw() {
             var confirm_delete_account = confirm('계정을 삭제하시겠습니까?')
@@ -24,24 +23,39 @@
             <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
             <% if(sess.idx){ %>
               <div class="h_ups" id=login_div>
-                <a id="my_page_logout" href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
+                <button class="loginbtns" onclick="location.href='/logout' "><a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃</a></button>
               </div>
               <% } else{ %>
-            <div class="h_ups" id=login_div>
-              <a href="/sign_up" class="loginbtns" id="sign_up_btn">&nbsp;회원가입&nbsp;</a>
-              <a href="/login" class="loginbtns" id="login_btn">&nbsp;로그인&nbsp;</a>
-            </div>
+                <div class="h_ups" id=login_div>
+                    <button class="loginbtns" onclick="location.href='/sign_up' "><a href="/sign_up"  id="sign_up_btn">&nbsp;회원가입&nbsp;</a></button>
+                    <button class="loginbtns" onclick="location.href='/login' "><a href="/login"  id="login_btn">&nbsp;로그인&nbsp;</a></button>
+                </div>
             <% } %>
           </div>
         </header>
-    <h2>반갑습니다 <%=sess.nickname%>님</h2>
+    <h2>반갑습니다 <%=sess.nickname%> 님</h2>
 
-    <div style="border: 1px solid gray;">
+    <div style="border: 1px solid gray; text-align: center;">
 
-        <p><span><button><a style="text-decoration: none; color:black"href="/user2/mypage/edit_profile">내 정보 수정</a></button></span></p>
-        <p><span><button><a style="text-decoration: none; color:black"href="/user2/check_password">비밀번호 변경</a></button></span></p>
-        <p><span>
-            <button onclick="confirm_withdraw()">회원탈퇴</button></span></p>
+        <p>
+            <span>
+                <button style="width: 100px; background-color: cornflowerblue; border-radius: 30px;" onclick="location.href='/user2/mypage/edit_profile'">
+            <a style="width: 100px;text-decoration: none; color:white"href="/user2/mypage/edit_profile">내 정보 수정</a>
+        </button>
+    </span>
+</p>
+        <p>
+            <span>
+                <button style="width: 100px; background-color: cornflowerblue; border-radius: 30px;" onclick="location.href='/user2/check_password'">
+                    <a style="width: 100px;text-decoration: none; color:white"href="/user2/check_password">비밀번호 변경</a>
+                </button>
+            </span>
+        </p>
+        <p>
+            <span>
+                <button style="width: 100px; background-color: cornflowerblue;color:white; border-radius: 30px;" onclick="confirm_withdraw()">회원탈퇴</button>
+            </span>
+        </p>
     </div>
 </body>
 </html>

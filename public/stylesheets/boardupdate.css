@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+
+body {
+    margin: 30px 150px;
+    padding: 0;
+    display: flex;
+    min-width: 730px;
+    flex-flow: column nowrap;
+    justify-content: center;
+    overflow: scroll;
+}
+a{text-decoration: none;}
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header {
+    flex-shrink: 0;
+}
+
+header a {
+    text-decoration: none;
+}
+
+#header_up {
+    height: 85px;
+    position: relative;
+    text-align: center;
+    line-height: 85px;
+    border-bottom: 1px solid gray;
+}
+
+#header_up>#home_icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#header_up>#main_title {
+    position: absolute;
+    font-family: "Roboto", serif;
+    top:40px;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 50px;
+    margin: 0;
+    width:160px;
+}
+
+#login_div {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    line-height: 30px;
+    display: flex;
+}
+
+.loginbtns {
+    border-radius: 12px;
+    background-color: cornflowerblue;
+    margin-right: 20px;
+}
+.loginbtns a{
+    color: white;
+}
+.loginbtns:hover{
+    font-weight: bold;
+}
+
+
+
+#update_form{
+    margin: 10 auto;
+    width: 1700px;
+    height: 1000px;
+}
+#update_table{
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 10 auto;
+    width: 1600px;
+}
+._td{text-align: center;}
+input, textarea{
+    text-align: left;
+    margin: 0 auto;
+}
+.first_td{
+    width: 1500px;
+    height: 40px;
+}
+.second_td{
+    width: 1500px;
+    height: 40px;
+}
+.third_td{
+    width: 1500px;
+    height: 600px;
+}
+.fourth_td{
+    width: 1500px;
+    height: 40px;
+}
+#input_title{
+    width: 1400px;
+    height: 30px;
+}
+#input_writer{
+    width: 1400px;
+    height: 30px;
+}
+#textarea_content{
+    width: 1400px;
+    height: 580px;
+    resize: none;
+    overflow-y: auto;
+}
+#input_submit{
+    width: 700px;
+    height: 30px;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 50px;
+    text-align: center;
+    
+}
+#input_submit:hover{
+    font-weight: bold;
+}

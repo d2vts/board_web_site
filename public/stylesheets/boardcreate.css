@@ -101,6 +101,7 @@
         #create_textarea{
             width:880px;
             height: 650px;
+            resize: none;
         }
         #create_button{
             width:100px;

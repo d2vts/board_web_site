@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="../../stylesheets/boardupdate.css">
+
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
@@ -8,35 +10,38 @@
     <div id="header_up">
       <a class="h_ups" id="home_icon" href="https://github.com/d2vts/board_web_site"><img src="../../images/github70.png" alt="github"></a>
         <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
-        <% if(session.idx){ %>
+        <% if(session){ %>
           <div class="h_ups" id=login_div>
-            <a href="/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
-            <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
+            <button class="loginbtns" onclick="location.href='/user2/mypage' "><a href="/user2/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지</a></button>
+            <button class="loginbtns" onclick="location.href='/logout' "><a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃</a></button>
           </div>
           <% } else{ %>
-        <div class="h_ups" id=login_div>
-          <a href="/sign_up" class="loginbtns" id="sign_up_btn">&nbsp;회원가입&nbsp;</a>
-          <a href="/login" class="loginbtns" id="login_btn">&nbsp;로그인&nbsp;</a>
-        </div>
+            <div class="h_ups" id=login_div>
+              <button class="loginbtns" onclick="location.href='/sign_up' "><a href="/sign_up"  id="sign_up_btn">&nbsp;회원가입&nbsp;</a></button>
+              <button class="loginbtns" onclick="location.href='/login' "><a href="/login"  id="login_btn">&nbsp;로그인&nbsp;</a></button>
+            </div>
         <% } %>
       </div>
 <h1>목록 추가하기</h1>
 <hr>
 
-<form action="/board/update_process/<%=post.id %>?_method=PUT" method="POST">
-    <table>
+<form id="update_form" action="/board/update_process/<%=post.id %>?_method=PUT" method="POST">
+    <table id="update_table">
         <tr>
-            <td><input type="text" name="editTitle" value="<%= post.title %>" id="post_title" required></td>
+            <td class="_td first_td"><input id="input_title" type="text" name="editTitle" value="<%= post.title %>" id="post_title" required></td>
         </tr>
         <tr>
-            <td><input type="text" name="editWriter" value="<%= session %>" id="post_writer" required readonly></td>
+            <td class="_td second_td"><input id="input_writer" type="text" name="editWriter" value="<%= session %>" id="post_writer" required readonly></td>
         </tr>
         <tr>
-            <td><textarea name="editContent" id="content" cols="30" rows="10" id="post_content" required><%= post.content%></textarea></td>
+            <td class="_td third_td"><textarea id="textarea_content" name="editContent" id="content" cols="30" rows="10" id="post_content" required><%= post.content%></textarea></td>
+        </tr>
+        <tr>
+            <td class="_td fourth_td"><input id="input_submit" type="submit" value="저장"></td>
         </tr>
         
     </table>
-    <input type="submit" value="저장">
+    
 </form>
 </body>
 </html>
