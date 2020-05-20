@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+        body {
+            margin: 30px 150px;
+            padding: 0;
+            display: flex;
+            min-width: 730px;
+            flex-flow: column nowrap;
+            justify-content: center;
+            overflow: scroll;
+        }
+        a{text-decoration: none;}
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        header {
+            flex-shrink: 0;
+        }
+
+        header a {
+            text-decoration: none;
+        }
+
+        #header_up {
+            height: 85px;
+            position: relative;
+            text-align: center;
+            line-height: 85px;
+            border-bottom: 1px solid gray;
+        }
+
+        #header_up>#home_icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        #header_up>#main_title {
+            position: absolute;
+            font-family: "Roboto", serif;
+            top:40px;
+            left:50%;
+            transform: translate(-50%,-50%);
+            font-size: 50px;
+            margin: 0;
+            width:160px;
+        }
+
+        #login_div {
+            position: absolute;
+            right: 10px;
+            top: 40px;
+            line-height: 30px;
+            display: flex;
+        }
+
+        .loginbtns {
+            border-radius: 12px;
+            background-color: cornflowerblue;
+            margin-right: 20px;
+        }
+        .loginbtns a{
+            color: white;
+        }
+        .loginbtns:hover{
+            font-weight: bold;
+        }
+
+        
+        #create_div{
+            margin: 0 auto;
+            width: 1200px;
+            height: 1000px;
+        }
+        #create_form{
+            margin: 0 auto;
+            width:1000px;
+            height: 800px;
+        }
+        #create_table{
+            width:900px;
+            height: 780px;
+        }
+        #create_title_td{
+            width:700px;
+            height: 100px;
+        }
+        #create_content_td{
+            width:700px;
+            height: 600px;
+        }
+        #create_input_title{
+            width:880px;
+            height: 80px;
+        }
+        #create_input_title::-webkit-input-placeholder{ font-size:30px; color: gray; text-indent: 10px;}
+        #create_textarea{
+            width:880px;
+            height: 650px;
+        }
+        #create_button{
+            width:100px;
+            height:30px;
+            border-radius: 12px;
+            background-color: cornflowerblue;
+            margin-right: 20px;
+            color: white;
+        }
+        #create_button:hover{
+            font-weight: bold;
+        }

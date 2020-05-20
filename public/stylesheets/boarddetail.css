@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+        body {
+            margin: 30px 150px;
+            padding: 0;
+            display: flex;
+            min-width: 730px;
+            flex-flow: column nowrap;
+            justify-content: center;
+            overflow: scroll;
+        }
+        a{
+            text-decoration: none;
+            color: black;}
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        pre{
+            word-wrap: break-word;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all;
+        }
+        header {
+            flex-shrink: 0;
+        }
+
+        header a {
+            text-decoration: none;
+        }
+
+        #header_up {
+            height: 85px;
+            position: relative;
+            text-align: center;
+            line-height: 85px;
+            border-bottom: 1px solid gray;
+        }
+
+        #header_up>#home_icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        #header_up>#main_title {
+            position: absolute;
+            font-family: "Roboto", serif;
+            top:40px;
+            left:50%;
+            transform: translate(-50%,-50%);
+            font-size: 50px;
+            margin: 0;
+            width:160px;
+        }
+
+        #login_div {
+            position: absolute;
+            right: 10px;
+            top: 40px;
+            line-height: 30px;
+            display: flex;
+        }
+
+        .loginbtns {
+            border-radius: 12px;
+            background-color: cornflowerblue;
+            margin-right: 20px;
+        }
+        .loginbtns a{
+            color: white;
+        }
+        .loginbtns:hover{
+            font-weight: bold;
+        }
+
+        #header_down {
+            padding-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        #header_down>#main_menu {
+
+            float: left;
+            position: relative;
+
+        }
+
+        #header_down>#main_menu>li {
+            float: left;
+            position: relative;
+            height: 30px;
+            width: 90px;
+            line-height: 25px;
+            text-align: center;
+
+        }
+
+        #header_down>#main_menu>li>a {
+            text-decoration: none;
+            letter-spacing: 0.05rem;
+            display: block;
+            padding-left: 10px;
+            padding-right: 10px;
+            color: gray;
+        }
+
+        #header_down #sub_menu {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #header_down #sub_menu>li {
+            height: 25px;
+            line-height: 25px;
+
+        }
+
+        #header_down #sub_menu>li>a {
+            vertical-align: middle;
+            color: darkgray;
+        }
+
+
+        table{
+            border: 1px solid lightgray;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin: 10 auto;
+            width: 1500px;
+            
+        }
+
+        ._td{
+            padding: 10px;
+            width: 800px;
+        }
+        .first_td{
+            font-size: 30px; font-weight: bold;}
+        .second_td{
+            font-weight: bold; font-size: 30px;}
+        .second_td span{
+            color: white; border: 1px solid cornflowerblue; padding: 5px 20px; border-radius: 10px; background-color: cornflowerblue;}
+        .third_td{
+            border-top: 1px solid lightgray;
+            height: 500px;
+            border-bottom: 1px solid lightgray;
+            background-color: #eff4ff;
+
+}
+        .third_td #post_content{
+            padding: 10px 0px;
+            height: 480px;
+            width: 1460px;
+            background-color: #eff4ff;
+            overflow-x: auto;
+
+        }
+        .third_td #post_content pre{
+            padding:10px;
+            background-color: #eff4ff;
+        }
+
+        .fourth_td{
+            border: 1px solid white;
+        }
+        .ud_button{
+            width: 400px;
+            text-align: right;
+            display: flex;
+            flex-direction: row;
+        }
+        .ud_button #update_button{
+            width:70px;
+            margin: 0 10px;
+            background-color: cornflowerblue;
+            border-radius: 20px;}
+        .ud_button #update_a{
+            background-color: cornflowerblue;
+            color: white;
+        }
+        .ud_button #update_button:hover{
+            font-weight: bold;
+        }
+        .ud_button #delete_form{
+            width:70px;
+            margin: 0 10px;
+            }
+        .ud_button #delete_input{
+            background-color: cornflowerblue;
+            color: white;
+            border-radius: 20px;
+        }
+        .ud_button #delete_input:hover{
+            font-weight:bold;
+        }
+        #list_button{
+            width:70px;
+            margin: 0 10px;
+            border-radius: 20px;
+            background-color: cornflowerblue;
+        }
+        #list_button a{
+            color: white;
+        }
+        #list_button:hover{
+            font-weight: bold;
+        }
+
+        /*  write_reply
+            textarea_div
+            reply_button_div
+            reply_button 
+        */
+
+        .write_reply{
+            background-color: #eff4ff;
+            margin-top: 20px;
+            padding-top: 40px;
+            width: 1500px;
+            height: 200px;;
+        }
+        #textarea_div{
+            width: 1300px;
+            margin: 10px 20px;
+        }
+        #textarea_div textarea{
+            width: 1450px; height: 120px;
+            resize: none;
+        }
+        #textarea_div textarea::-webkit-input-placeholder{
+            padding: 10px;
+            font-size: 18px;
+            color: cornflowerblue;
+            font-weight: bold;
+        }
+        .reply_button_div{
+            margin: 10px 20px;
+            height: 35px;
+        }
+        .reply_button{
+            height: 30px;
+            width:100px;
+            margin: 0 10px;
+            border-radius: 20px;
+            background-color: cornflowerblue;
+            color: white;
+        }
+        .reply_button a{
+            color: white;
+        }
+        #gotologin{
+            color: white;
+            background-color: cornflowerblue;
+            font-weight: bold;
+            border: 2px solid cornflowerblue;
+            border-radius: 20px;
+        }
+        #gotologin:hover{
+            color:darkblue;
+        }
+        #comment_table{
+            border:none;
+            margin-top:40px;
+
+
+            border-top: 1px solid lightgray;
+            border-left: 1px solid lightgray;
+            border-right: 1px solid lightgray;
+            border-bottom: 1px solid lightgray;
+
+        }
+        #comment_writer{
+            padding: 20px;
+            height: 30px;
+        }
+        #comment_writer span{
+        color: white;
+        border: 1px solid cornflowerblue;
+        padding: 5px 20px;
+        border-radius: 10px;
+        background-color: cornflowerblue;}
+        #comment_delete_td{
+            width:160px;
+        }
+        #comment_delete_form{
+            width:121px;
+            height: 31px;
+        }
+        #comment_delete_button{
+            height: 30px;
+            width: 100px;
+            margin: 0 10px;
+            border-radius: 20px;
+            background-color: cornflowerblue;
+            color: white;
+        }
+        #comment_content{
+            padding: 20px;
+            height: 100px;
+            background-color: #eff4ff;
+
+        }
+        #comment_content_div{
+            height: 100px;
+            width: 1400px;
+            background-color: white;
+            border: 1px solid lightgray;;
+        }

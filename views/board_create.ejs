@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="../../stylesheets/index.css">
+  <link rel="stylesheet" href="../../stylesheets/boardcreate.css">
     <link rel="stylesheet" href="../../stylesheets/fontello.css">
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
 <body>
     <div id="header_up">
-        <a class="h_ups" id="home_icon" href="#"><span>&#xe800</span></a>
+      <a class="h_ups" id="home_icon" href="https://github.com/d2vts/board_web_site"><img src="../../images/github70.png" alt="github"></a>
         <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
         <% if(sess.idx){ %>
           <div class="h_ups" id=login_div>
-            <a href="/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a> 
-            <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
+            <button class="loginbtns" onclick="location.href='/user2/mypage' "><a href="/user2/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지</a></button>
+            <button class="loginbtns" onclick="location.href='/logout' "><a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃</a></button>
           </div>
           <% } else{ %>
         <div class="h_ups" id=login_div>
-          <a href="/sign_up" class="loginbtns" id="sign_up_btn">&nbsp;회원가입&nbsp;</a>
-          <a href="/login" class="loginbtns" id="login_btn">&nbsp;로그인&nbsp;</a>
+          <button class="loginbtns" onclick="location.href='/sign_up' "><a href="/sign_up"  id="sign_up_btn">&nbsp;회원가입&nbsp;</a></button>
+            <button class="loginbtns" onclick="location.href='/login' "><a href="/login"  id="login_btn">&nbsp;로그인&nbsp;</a></button>
         </div>
         <% } %>
       </div>
 <h1>목록 추가하기</h1>
 <hr>
-<form action="/board/create_process" method="POST">
-    <table>
+<div id="create_div">
+<form id ="create_form" action="/board/create_process" method="POST">
+    <table id="create_table">
         <tr>
-            <td><input type="text" name="inputTitle" placeholder="제목을 입력하세요."id="post_title" required></td>
+            <td id="create_title_td"><input id="create_input_title" type="text" name="inputTitle" placeholder="제목을 입력하세요."id="post_title" required></td>
         </tr>
         <tr>
-            <td><textarea name="inputContent" cols="30" rows="10" id="post_content" required></textarea></td>
+            <td id="create_content_td"><textarea id="create_textarea" name="inputContent" cols="30" rows="10" id="post_content" required></textarea></td>
         </tr>
     </table>
      <input type="hidden" name="inputUserID" value="<%=user_info%>" required> 
-    <input type="submit" value="저장">
+    <input id="create_button"type="submit" value="저장">
 </form>
+</div>
 </body>
 </html>

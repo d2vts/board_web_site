@@ -42,8 +42,6 @@ router.get('/board', function (req, res, next){
 
 
 router.get('/login', function (req, res, next){
-  //let before_url = req.headers.referer;
-  //res.render('log_in', {before_url: before_url});
   let before_url = req.headers.referer;
   if(req.headers.referer === 'http://localhost:3000/login'){
     before_url = req.session.route;
@@ -72,5 +70,11 @@ router.get("/logout", function(req,res,next){
 router.get('/sign_up', function (req, res, next){
   res.render('sign_up');
 })
+
+router.get('/notice', function(req,res,next){
+  res.render('notice',{});
+})
+
+
 
 module.exports = router;

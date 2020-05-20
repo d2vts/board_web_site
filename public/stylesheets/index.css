@@ -35,32 +35,39 @@
 
         #header_up>#home_icon {
             position: absolute;
-            left: 0;
-            font-family: "fontello";
-            font-size: 100px;
-            color: gray;
+            top: 10px;
+            left: 10px;
         }
 
         #header_up>#main_title {
-            position: relative;
+            position: absolute;
             font-family: "Roboto", serif;
+            top:40px;
+            left:50%;
+            transform: translate(-50%,-50%);
             font-size: 50px;
             margin: 0;
+            width:160px;
         }
 
         #login_div {
             position: absolute;
             right: 10px;
-            top: 0;
+            top: 40px;
             line-height: 30px;
             display: flex;
         }
 
         .loginbtns {
             border-radius: 12px;
-            background-color: rgb(204, 201, 201);
-            color: rgb(0, 118, 255);
+            background-color: cornflowerblue;
             margin-right: 20px;
+        }
+        .loginbtns a{
+            color: white;
+        }
+        .loginbtns:hover{
+            font-weight: bold;
         }
 
         #header_down {
@@ -128,14 +135,18 @@
             padding: 10px;
             background-color: cornflowerblue;
             color: white;
-            font-size: 20px;
             text-align: center;
-            height: 300px;
+            height: 200px;
+            padding-bottom: 20px;
+
+        }
+        section>#section_up h2{
+            font-size: 45px;
         }
 
         section #best_ssul {
             font-size: 40px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-family: "Roboto", serif;
             font-style: italic;
         }
 
@@ -177,7 +188,7 @@
 
         .rct_a {
             color: cornflowerblue;
-
+            font-size: 25px;
         }
 
         .rct_a:hover {
@@ -186,11 +197,15 @@
 
         .gesiguel_ul {
             margin-top: 30px;
-            text-align: center;
+            width: 640px;
         }
 
         .gesiguel_ul li {
             margin: 30px;
+            width: 500px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .gesiguel_ul li a {
@@ -249,4 +264,8 @@
 
         th{
             border-bottom: 1px solid black;
+        }
+
+        #my_page_logout{
+            color: white;
         }

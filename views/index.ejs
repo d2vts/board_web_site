@@ -13,25 +13,25 @@
 <body>
   <header>
     <div id="header_up">
-      <a class="h_ups" id="home_icon" href="#">&#xe800</a>
+      <a class="h_ups" id="home_icon" href="https://github.com/d2vts/board_web_site"><img src="images/github70.png" alt="github"></a>
       <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
       <% if(session.idx){ %>
         <div class="h_ups" id=login_div>
-          <a href="/user2/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
-          <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
+          <button class="loginbtns" onclick="location.href='/user2/mypage' "><a href="/user2/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지</a></button>
+          <button class="loginbtns" onclick="location.href='/logout' "><a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃</a></button>
         </div>
         <% } else{ %>
       <div class="h_ups" id=login_div>
-        <a href="/sign_up" class="loginbtns" id="sign_up_btn">&nbsp;회원가입&nbsp;</a>
-        <a href="/login" class="loginbtns" id="login_btn">&nbsp;로그인&nbsp;</a>
+        <button class="loginbtns" onclick="location.href='/sign_up' "><a href="/sign_up"  id="sign_up_btn">&nbsp;회원가입&nbsp;</a></button>
+        <button class="loginbtns" onclick="location.href='/login' "><a href="/login"  id="login_btn">&nbsp;로그인&nbsp;</a></button>
       </div>
       <% } %>
     </div>
     <div id="header_down">
       <ul id=main_menu>
-        <li><a class="mm" href="#">공지사항</a></li>
-        <li><a class="mm" href="#">이벤트</a></li>
-        <li><a class="mm" href="#">커뮤니티</a>
+        <li><a class="mm" href="/notice">공지사항</a></li>
+        <li><a class="mm" href="/notice">이벤트</a></li>
+        <li><a class="mm" href="/board">커뮤니티</a>
           <ul id="sub_menu">
             <li><a href="/board">자유게시판</a></li>
           </ul>
@@ -43,8 +43,9 @@
 
   <section>
     <div id="section_up">
-      <h2 id="best_ssul"> Web Developer. Lee Tae Seung</h2>
-      <p> Node.js를 이용한 게시판형 웹페이지  </p>
+      <h2 id="best_ssul"> Web Developer</h2>
+      <h2 id="best_ssul">Lee Tae Seung</h2>
+      
       <br><br>
     </div>
     <div id="section_down">
@@ -55,7 +56,7 @@
         <div class="gesiguel">
           <ul class="gesiguel_ul">
             <% for(let post of posts) { %>
-              <li><a href="/board/detail/<%= post.id%>">▷ <%= post.title %></a></li>
+              <li class="gaesiguel_li"><img src="images/post_icon2.png" alt="github"><a href="/board/detail/<%= post.id%>"> <%= post.title %></a></li>
           <% } %>
           </ul>
         </div>
@@ -67,7 +68,7 @@
         <div class="gesiguel">
           <ul class="gesiguel_ul">
             <% for(var i = 0 ; i < postv.length; i++ ) {%>
-            <li><a href="/board/detail/<%= postv[i].id%>">▷ <%= postv[i].title %></a> <span style="font-size: 8px; border: 1px solid gray;">조회수 <%=i+1%>위</span></li>
+            <li class="gaesiguel_li"><img src="images/post_icon.png" alt="github"><a href="/board/detail/<%= postv[i].id%>"> <%= postv[i].title %></a> <span style="font-size: 8px; border: 1px solid gray;">조회수 <%=i+1%>위</span></li>
             <%}%>
           </ul>
         </div>
@@ -86,7 +87,7 @@
         <span id="f_email_span"> | E - mail : dev.taeseung@gmail.com | </span>
       </div>
       <div id="f_bot">
-        <span id="f_blog_span"> | <a href="https://naver.com">네이버 블로그</a> | </span>
+        <span id="f_blog_span"> | 네이버 블로그 | </span>
         <span id="f_cpr_span"> | <a href="https://github.com/d2vts/board_web_site">Git Hub</a> | </span>
       </div>
     </div>

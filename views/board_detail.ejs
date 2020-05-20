@@ -2,125 +2,131 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../../stylesheets/index.css">
+    <link rel="stylesheet" href="../../stylesheets/boarddetail.css">
     <link rel="stylesheet" href="../../stylesheets/fontello.css">
     <meta charset="UTF-8">
+    <script>
+        function gogo(){}
+        function gologin(){
+            var go_to_login=confirm('로그인화면으로 이동하시겠습니까?');
+            if(go_to_login==true){
+                location.href= '/login';
+                }
+            else{
+                
+            }
+        }
+    </script>
     <title>Document</title>
 </head>
 
 <body>
-    <style>
-        td {
-            border: 1px solid gray;
-            text-align: center;
-        }
 
-        #three {
-            border: 0
-        }
-
-        table {
-            width: 70%;
-        }
-
-        .UDL {
-            width: 70px;
-        }
-
-        #del_td {
-            margin: 0 auto;
-        }
-    </style>
     <div id="header_up">
-        <a class="h_ups" id="home_icon" href="#">&#xe800</a>
+        <a class="h_ups" id="home_icon" href="https://github.com/d2vts/board_web_site"><img src="../../images/github70.png" alt="github"></a>
         <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
         <% if(sess.idx){ %>
-          <div class="h_ups" id=login_div>
-            <a href="/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
-            <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
-          </div>
-          <% } else{ %>
         <div class="h_ups" id=login_div>
-          <a href="/sign_up" class="loginbtns" id="sign_up_btn">&nbsp;회원가입&nbsp;</a>
-          <a href="/login" class="loginbtns" id="login_btn">&nbsp;로그인&nbsp;</a>
+            <button class="loginbtns" onclick="location.href='/user2/mypage' "><a href="/user2/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지</a></button>
+            <button class="loginbtns" onclick="location.href='/logout' "><a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃</a></button>
+        </div>
+        <% } else{ %>
+        <div class="h_ups" id=login_div>
+            <button class="loginbtns" onclick="location.href='/sign_up' "><a href="/sign_up"  id="sign_up_btn">&nbsp;회원가입&nbsp;</a></button>
+        <button class="loginbtns" onclick="location.href='/login' "><a href="/login"  id="login_btn">&nbsp;로그인&nbsp;</a></button>
         </div>
         <% } %>
-      </div>
-    <h1>게시글</h1>
+    </div>
+    <h1>&nbsp;게시글</h1>
     <hr>
     <table>
         <tr>
-            <td>제목</td>
-            <td colspan=2><%=post.title%></td>
+            <td class="_td first_td" colspan=2><%=post.title%></td>
         </tr>
         <tr>
-            <td>작성자</td>
             <% for(let user of users){ %>
-                <% if(user.id==post.user_id){ %>
-            <td colspan=2><%=user.nickname%></td>
+            <% if(user.id==post.user_id){ %>
+            <td class="_td second_td"><span><%=user.nickname%></span></td>
             <%}}%>
-            <!-- 여기 작성자의 post.writer 에는 현재 세션의 nickname값이 들어가도록 함 -->
+            <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>내용</td>
-            <td colspan=2><%=post.content%></td>
+            <td class="_td third_td" colspan=2>
+                <div id="post_content"><pre><%=post.content%></pre></div> 
+            </td>
         </tr>
         <% if(sess.idnum==post.user_id){ %>
-            
+
         <tr>
-            <td>
-                <button><a class="UDL" href="/board/update/<%=post.id%>">수정하기</a></button>
-            </td>
-            <td id="del_td">
-                <div id="del_td" class="UDL">
-                    <form id="del_td" action="/board/delete_process/<%=post.id%>?_method=DELETE" method="post">
-                        <input type="submit" value="삭제하기"></input>
+            <td colspan="2" class="_td fourth_td">
+                <span>
+                <div class="ud_button">
+                    <button id="list_button"><a id="list_a" href="/board">목록으로</a></button>
+                    <button id="update_button"><a id="update_a" href="/board/update/<%=post.id%>">수정하기</a></button>
+                    <form id="delete_form" action="/board/delete_process/<%=post.id%>?_method=DELETE" method="post">
+                        <input id="delete_input" type="submit" value="삭제하기">
                     </form>
                 </div>
+                
+            </span>
             </td>
         </tr>
+
         <%} else{ %>
-            
+        <tr>
+            <td colspan="2" class="_td fourth_td">
+                <div id="list_btn_div"><button id="list_button"><a id="list_a" href="/board">목록으로</a></button></div>
+            </td>
+        </tr>
         <%}%>
 
     </table>
-    <button><a class="UDL" href="/board">목록으로</a></button>
-    <form action="/board/reply_process" method="POST">
-
-
-
-        <table>
+    <h1>댓글</h1>
+    <div class="write_reply">
+        <form action="/board/reply_process" method="POST">
             <input type="hidden" name="replyWriter" value="<%=sess.idx%>" id="post_title" required>
             <input type="hidden" name="replyPostId" value="<%=post.id%>">
-            <tr>
-                <td colspan><textarea name="replyContent" cols="50" rows="2"></textarea></td>
-                <% if(sess.idx){ %>
-                <td><input type="submit" value="댓글 등록"></td>
-                <%}else{%>
-                    <td><button><a href="/login">댓글 등록</a></button></td>
-                <%}%>
-            </tr>
-        </table>
-    </form>
-    <h3>댓글</h3>
-    <table>
-        <% for(let reply of replies) { %>
-            <tr>
-                
-                <% for(let user of users) { %>
-                    <% if(reply.user_id==user.id){ %>
-                <td colspan=2><%=user.nickname%></td>
-                <%}}%>
-                <td colspan=2><%=reply.content%></td>
+            <div id="textarea_div">
+            <% if(sess.idx){ %>
+                <textarea name="replyContent" cols="50" rows="2" placeholder=""></textarea>
+            <%}else{%>
+                <textarea name="replyContent" cols="50" rows="2" onclick="gologin()" placeholder="로그인 후 사용가능합니다."></textarea>
+            <%}%>
 
-                <% if(reply.user_id==sess.idnum){%>
-                <td><form id="del_td" action="/board/reply_delete/<%=reply.id%>/<%=post.id%>?_method=DELETE" method="post">
-                    <input type="submit" value="삭제"></input>
-                </form></td>
-                <%} else{}%>
-            </tr>
-            <% } %>
-        </table>
+            </div>
+            <div class="reply_button_div">
+            <% if(sess.idx){ %>
+            <input class="reply_button"type="submit" value="등록">
+            <%}else{%>
+            <div><a id="gotologin" href="/login">&nbsp;&nbsp;로그인 하러가기&nbsp;&nbsp;</a></div>
+            <%}%>
+            </div>
+        </form>
+    </div>
+
+    
+    <table id="comment_table">
+        <% for(let reply of replies) { %>
+        <tr>
+            <% for(let user of users) { %>
+            <% if(reply.user_id==user.id){ %>
+            <td id="comment_writer"colspan=2><span><%=user.nickname%></span></td>
+            <td>&nbsp;</td>
+            <%}}%>
+            <% if(reply.user_id==sess.idnum){%>
+                <td>&nbsp;</td>
+            <td id="comment_delete_td">
+                <form id="comment_delete_form" action="/board/reply_delete/<%=reply.id%>/<%=post.id%>?_method=DELETE" method="post">
+                    <input id="comment_delete_button" type="submit" value="삭제"></input>
+                </form>
+            </td>
+            <%} else{}%>
+        </tr>
+        <tr>
+            <td id="comment_content" colspan=3><div id= "comment_content_div"><%=reply.content%></div></td>
+        </tr>
+        <% } %>
+    </table>
 
 </body>
 

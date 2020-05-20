@@ -1,53 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../../stylesheets/index.css">
+    <link rel="stylesheet" href="../../stylesheets/boardlist.css">
     <link rel="stylesheet" href="../../stylesheets/fontello.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>게시판</title>
 </head>
 <body>
     <header>
     <div id="header_up">
-        <a class="h_ups" id="home_icon" href="/">&#xe800</a>
+        <a class="h_ups" id="home_icon" href="https://github.com/d2vts/board_web_site"><img src="../../images/github70.png" alt="github"></a>
         <h1 class="h_ups" id="main_title"><a href="/" style="color: cornflowerblue;">D2VTS</a></h1>
         <% if(sess.idx){ %>
           <div class="h_ups" id=login_div>
-            <a href="/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지&nbsp;</a>
-            <a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃&nbsp;</a>
+            <button class="loginbtns" onclick="location.href='/user2/mypage' "><a href="/user2/mypage" class="loginbtns" id="mypage_btn">&nbsp;마이페이지</a></button>
+            <button class="loginbtns" onclick="location.href='/logout' "><a href="/logout" class="loginbtns" id="logout_btn">&nbsp;로그아웃</a></button>
           </div>
           <% } else{ %>
         <div class="h_ups" id=login_div>
-          <a href="/sign_up" class="loginbtns" id="sign_up_btn">&nbsp;회원가입&nbsp;</a>
-          <a href="/login" class="loginbtns" id="login_btn">&nbsp;로그인&nbsp;</a>
+            <button class="loginbtns" onclick="location.href='/sign_up' "><a href="/sign_up"  id="sign_up_btn">&nbsp;회원가입&nbsp;</a></button>
+            <button class="loginbtns" onclick="location.href='/login' "><a href="/login"  id="login_btn">&nbsp;로그인&nbsp;</a></button>
         </div>
         <% } %>
       </div>
     </header>
-    <h1> 게시판 </h1>
+    <h1 style="font-weight: bold; text-align: center;"> 자유게시판 </h1>
     <table>
-        <tr style="border-bottom: 1px solid black;">
-            <th>제목</td>
-            <th>작성자</td>
-            <th>조회수</td>
-            <th>작성일</td>
+        <tr>
+            <th class="title_th">제목</td>
+            <th class="etc_th">작성자</td>
+            <th class="etc_th">조회수</td>
+            <th class="etc_th">작성일</td>
         </tr>
         <% for(var i = 0; i< listCnt; i++){%>
+
+            <% if(post != undefined){ %>
+
             <% if( post[i] != undefined){ %>
             <tr>
-                <td><a href="/board/detail/<%=post[i].id%>"><%= post[i].title %></a></td>
+                <td class="title_td"><a href="/board/detail/<%=post[i].id%>"><%= post[i].title %></a></td>
                 <!-- 아래의 작성자에 user테이블을 이용해서 user.id에 해당하는 user.nickname을 넣어줘야함 -->
                 <% for(let user of users){ %>
                 <% if(post[i].user_id==user.id){ %>
-                <td><%= user.nickname %></td>
-                <td><%= post[i].views %></td>
-                <td><%= post[i].createdAt.toLocaleString() %></td>
+                <td class="etc_th"><%= user.nickname %></td>
+                <td class="etc_th"><%= post[i].views %></td>
+                <td class="etc_th"><%= post[i].createdAt.toLocaleString() %></td>
                 <%}}%>
             </tr>
             <%} else {%>
             <%}%>
-            <%} %>
+            <%} else {%>
+            <%}}%>
+
 
                 <!-- //////////////////kind = reqquery//////////////// -->
                 <tr class="main-table" id="page">
@@ -120,22 +125,24 @@
                 <!-- /////////////////////////////////// -->
 
     </table>
-    <% if(sess!=undefined){ %>
-    <span ><a href="/board/create">글 작성하기</a></span>
-    <%}else{%>
-    <span ><a href="/login">글 작성하기</a></span>
-    <% }%>
+    
 
 
-    <form action="/board/list/<%=pageNow%>">
+    <form id="search_form"action="/board/list/<%=pageNow%>">
 
-        <select name="find_type">
+        <select id = "search_select" name="find_type">
             <option value="title">제목</option>
             <option value="content">내용</option>
             <option value="contentitle">제목+내용</option>
             <option value="writer">작성자</option>
-        </select><input name="_query" placeholder="검색어 입력" type="text"><input type="submit" value="검색">
+        </select>
+        <input id="search_input" name="_query" placeholder="검색어 입력" type="text"><input id = "search_submit" type="submit" value="검색">
 
+        <% if(sess!=undefined){ %>
+            <span class="create_span"><a href="/board/create">글 작성하기</a></span>
+            <%}else{%>
+            <span class="create_span"><a href="/login">글 작성하기</a></span>
+            <% }%>
     </form>
 
 

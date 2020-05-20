@@ -38,6 +38,8 @@ router.get('/list/:page', function (req, res, next) {
           console.log("totalPage(총 페이지의 개수) : ", totalPage);
           console.log("startPage(화면에 표시할 시작페이지) : ", startPage);
           console.log("endPage(화면에 표시할 끝페이지) : ", endPage);
+
+
           db.query(`SELECT * FROM posts ORDER BY createdAt desc limit ${pageBegin},${listCnt}`, function (err, result) {
             var fromRouterData = {
               post: result, pageNow: pageNow, listCnt: listCnt,
@@ -78,9 +80,17 @@ router.get('/list/:page', function (req, res, next) {
         count_of_find_type_query = `select count(*) cnt from posts where ${req.query.find_type} like '%${req.query._query}%'`
       }
 
+
+
       
+      //추가해야 하는 사항 검색결과가 없을때 해결해야함
       db.query(`${count_of_find_type_query}`,
         function (err, result) {
+
+          console.log("검색결과가 없을때 DB에 카운트 값구하는 쿼리를 넣은 결과 값 : ", result);
+          //결과 값으로 result[0]에 cnt값이 0으로 나오게됨
+          //if(cnt==0) 일때 상황 하나 만들어줘야함 ex) totalCnt 값이 0일 경우에 대한 if문 사용-----------------------
+
           var totalCnt = result[0].cnt; // 게시물의 총 개수
           var totalPage = Math.floor(totalCnt / listCnt); // 총 페이지의 수
           if (totalCnt % listCnt > 0) totalPage++; // 페이지 나머지가 존재한다면 총 페이지의 수 +1
@@ -98,7 +108,14 @@ router.get('/list/:page', function (req, res, next) {
           console.log("startPage(화면에 표시할 시작페이지) : ", startPage);
           console.log("endPage(화면에 표시할 끝페이지) : ", endPage);
          
-          
+          if(totalCnt==0){
+            startPage=1, endPage=1,totalPage=1,pageNow=1;
+          }
+          console.log("totalCnt==0일때", startPage, endPage, totalPage);
+
+
+
+
 
           var writer_db_query = `SELECT * FROM posts WHERE user_id ='${writer_post_user_id}' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
           var content_db_query = `SELECT * FROM posts WHERE content like '%${req.query._query}%' ORDER BY createdAt desc limit ${pageBegin},${listCnt}`;
@@ -138,11 +155,10 @@ router.get('/list/:page', function (req, res, next) {
 });
 
 router.get('/create', function (req, res, next) {
-  let sess = req.session.idx;
-  console.log(sess);
-  if (sess != undefined) {
+  let sess = req.session;
+  if (sess.idx != undefined) {
     models.user.findAll({
-      where: { user_id: sess }
+      where: { user_id: sess.idx }
     }).then(result => {
       console.log(result[0].dataValues.id),
         res.render("board_create", { user_info: result[0].dataValues.id, sess:sess });
